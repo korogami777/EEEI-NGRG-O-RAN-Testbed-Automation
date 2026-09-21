@@ -283,6 +283,8 @@ else
     DOCKERVERSION=$(get_latest_package_version "docker-ce" "${DOCKERV}")
 fi
 KUBEVERSION=$(get_latest_package_version "kubeadm" "${KUBEV}")
+KUBELETVERSION=$(get_latest_package_version "kubelet" "${KUBEV}")
+KUBECTLVERSION=$(get_latest_package_version "kubectl" "${KUBEV}")
 CNIVERSION=$(get_latest_package_version "kubernetes-cni" "${KUBECNIV}")
 HELMVERSION=$(get_latest_package_version "helm" "${HELMV}")
 
@@ -293,6 +295,12 @@ fi
 if [ -z "${KUBEVERSION}" ]; then
     echo "No Kubernetes version found for prefix ${KUBEV}. Trying latest available version."
     KUBEVERSION=$(apt-cache madison kubeadm | head -1 | awk '{print $3}')
+fi
+if [ -z "${KUBELETVERSION}" ]; then
+    KUBELETVERSION="${KUBEVERSION}"
+fi
+if [ -z "${KUBECTLVERSION}" ]; then
+    KUBECTLVERSION="${KUBEVERSION}"
 fi
 if [ -z "${CNIVERSION}" ]; then
     echo "No Kubernetes CNI version found for prefix ${KUBECNIV}. Trying latest available version."
@@ -989,13 +997,13 @@ fi
 if [ -z "${KUBEVERSION}" ]; then
     sudo env $APTVARS apt-get install -y kubeadm kubelet kubectl
 else
-    sudo env $APTVARS apt-get install -y $APTOPTS kubeadm=${KUBEVERSION} kubelet=${KUBEVERSION} kubectl=${KUBEVERSION}
+    sudo env $APTVARS apt-get install -y $APTOPTS kubeadm=${KUBEVERSION} kubelet=${KUBELETVERSION} kubectl=${KUBECTLVERSION}
 fi
 
 # If kubectl command is not found after install, reinstall
 if ! command -v kubectl >/dev/null 2>&1; then
     echo "kubectl not found after install, retrying with --reinstall..."
-    sudo env $APTVARS apt-get install -y --reinstall kubectl=${KUBEVERSION}
+    sudo env $APTVARS apt-get install -y --reinstall kubectl=${KUBECTLVERSION}
     if ! command -v kubectl >/dev/null 2>&1; then
         echo "ERROR: /usr/bin/kubectl still not found after reinstall. Aborting."
         exit 1
