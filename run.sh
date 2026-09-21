@@ -59,7 +59,7 @@ if [ "$USE_DURANTA_UE" = "true" ]; then
     fi
 fi
 
-sudo -v # Ensure sudo session is active
+sudo true # Ensure sudo session is active
 
 UE_NUMBERS=()
 if [ "$USE_ZMQ_CHANNEL_EMULATOR" = "true" ]; then

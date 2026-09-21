@@ -40,7 +40,7 @@ cd "$SCRIPT_DIR"
 # Default values
 UE_NUMBER=1
 RFSIM_SERVER=0
-USE_ZMQ_CHANNEL_EMULATOR=false
+USE_ZMQ_CHANNEL_EMULATOR=true
 SHOW_ZMQ_CHANNEL_EMULATOR_GUI=false
 if [ -z "${DISPLAY:-}" ] && [ -z "${WAYLAND_DISPLAY:-}" ]; then
     SHOW_ZMQ_CHANNEL_EMULATOR_GUI=false
@@ -78,7 +78,7 @@ fi
 if [ "$USE_ZMQ_CHANNEL_EMULATOR" = "true" ]; then
     "$SCRIPT_DIR/install_scripts/run_zmq_channel_emulator.sh" --show-ui "$SHOW_ZMQ_CHANNEL_EMULATOR_GUI"
 fi
-sudo -v # Ensure sudo session is active
+sudo true # Ensure sudo session is active
 sudo setsid bash -c "exec stdbuf -oL -eL \"$SCRIPT_DIR/run.sh\" $UE_NUMBER $RFSIM_SERVER_ARG" </dev/null >/dev/null 2>&1 &
 stty sane || true
 

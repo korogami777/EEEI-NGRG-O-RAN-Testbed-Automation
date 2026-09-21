@@ -63,7 +63,7 @@ else
     >logs/gnb_stdout.txt
     sudo chown --recursive "${SUDO_USER:-$USER}" logs
 
-    sudo -v # Ensure sudo session is active
+    sudo true # Ensure sudo session is active
     sudo setsid bash -c "exec stdbuf -oL -eL \"$SCRIPT_DIR/run.sh\"" </dev/null >/dev/null 2>&1 &
 
     echo -n "Waiting for gNodeB to be ready"
