@@ -82,7 +82,12 @@ if [ "$USE_ZMQ_CHANNEL_EMULATOR" = "true" ]; then
         IFS=,
         echo "${CELL_NUMBERS[*]}"
     )
-    if ! "Next_Generation_Node_B/install_scripts/validate_zmq_channel_emulator_config.sh" --ues "$UE_NUMBERS_STR" --cells "$CELL_NUMBERS_STR"; then
+    VALIDATE_ARGS=(--ues "$UE_NUMBERS_STR" --cells "$CELL_NUMBERS_STR")
+    if [ "$USE_DURANTA_UE" = "true" ]; then
+        # Duranta UE configs are not in the srsRAN UE format, so only validate the channel emulator
+        VALIDATE_ARGS+=(--channel-emulator-only)
+    fi
+    if ! "Next_Generation_Node_B/install_scripts/validate_zmq_channel_emulator_config.sh" "${VALIDATE_ARGS[@]}"; then
         echo "Run ./generate_configurations.sh with the same UE numbers before ./run.sh."
         exit 1
     fi
