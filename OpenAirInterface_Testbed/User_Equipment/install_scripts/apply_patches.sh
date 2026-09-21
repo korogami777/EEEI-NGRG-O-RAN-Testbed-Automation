@@ -162,14 +162,17 @@ echo "Patching ran_func_kpm_subs.h for cell_global_id in cudu_ue_info_pair_t..."
 git apply --verbose --ignore-whitespace "$PARENT_DIR/install_patch_files/openairinterface5g/openair2/E2AP/RAN_FUNCTION/O-RAN/ran_func_kpm_subs.h.patch"
 cd ..
 
+# Upstream fix for the UE segfault when a HARQ-ACK on the common PUCCH overlaps a dedicated SR/CSI
+# https://github.com/duranta-project/openairinterface5g/pull/561 (issue #493), skipped once merged upstream
 cd openairinterface5g
-git restore openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.c
-if [ ! -f "openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.c.previous" ]; then
-    cp openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.c openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.c.previous
-    cp openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.c.previous "$PARENT_DIR/install_patch_files/openairinterface5g/openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.previous.c"
+COMMON_HARQ_PUCCH_PATCH="$PARENT_DIR/install_patch_files/openairinterface5g/openair2/LAYER2/NR_MAC_UE/common_harq_pucch_pr561.patch"
+git restore openair2/LAYER2/NR_MAC_UE/mac_defs.h openair2/LAYER2/NR_MAC_UE/mac_proto.h openair2/LAYER2/NR_MAC_UE/nr_ra_procedures.c openair2/LAYER2/NR_MAC_UE/nr_ue_procedures.c openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.c
+if git apply --reverse --check --ignore-whitespace "$COMMON_HARQ_PUCCH_PATCH" 2>/dev/null; then
+    echo "Common HARQ-ACK PUCCH fix is already present upstream, skipping patch."
+else
+    echo "Patching NR UE MAC for common HARQ-ACK PUCCH overlap (upstream PR 561)..."
+    git apply --verbose --ignore-whitespace "$COMMON_HARQ_PUCCH_PATCH"
 fi
-echo "Patching nr_ue_scheduler.c to avoid multiplexing HARQ-ACK on common PUCCH with SR/CSI..."
-git apply --verbose --ignore-whitespace "$PARENT_DIR/install_patch_files/openairinterface5g/openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.c.patch"
 cd ..
 
 echo
