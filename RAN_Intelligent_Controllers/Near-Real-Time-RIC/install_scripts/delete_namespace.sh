@@ -69,7 +69,7 @@ for NAMESPACE in "$@"; do
     # Delete all resources within the namespace
     echo "Deleting all resources in the namespace $NAMESPACE..."
     for RESOURCE in $(kubectl api-resources --verbs=delete --namespaced -o name); do
-        kubectl delete "$RESOURCE" --all -n "$NAMESPACE" --grace-period=0 --force 2>/dev/null
+        kubectl delete "$RESOURCE" --all -n "$NAMESPACE" --grace-period=0 --force --wait=false 2>/dev/null
     done
     kubectl get pv -o json 2>/dev/null | jq -r ".items[] | select(.spec.claimRef.namespace == \"$NAMESPACE\" and .status.phase == \"Released\") | .metadata.name" | while read -r PV_NAME; do
         if [ -n "$PV_NAME" ]; then
