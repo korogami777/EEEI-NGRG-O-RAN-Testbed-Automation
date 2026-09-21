@@ -40,7 +40,7 @@ fi
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
 cd "$SCRIPT_DIR"
 
-USE_DURANTA_UE=false
+USE_DURANTA_UE=true
 USE_FLEXRIC=false
 USE_ZMQ_CHANNEL_EMULATOR=true
 

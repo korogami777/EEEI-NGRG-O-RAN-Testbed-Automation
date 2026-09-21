@@ -39,7 +39,7 @@ fi
 
 USE_FLEXRIC=false
 USE_ZMQ_CHANNEL_EMULATOR=true
-USE_DURANTA_UE=false
+USE_DURANTA_UE=true
 
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
 cd "$SCRIPT_DIR"
