@@ -63,6 +63,8 @@ cd build/
 cmake .. && make -j$(nproc) package && cmake .. -DDEV_PKG=1 && make -j$(nproc) package
 cp *.deb ../e2sm_examples/kpm_e2sm/
 cd ../
+# Pre-fetch base images from the throttled O-RAN SC registry with parallel, resumable downloads
+python3 "$SCRIPT_DIR/prefetch_docker_image.py" Dockerfile_kpm_updated --build-arg CONTAINER_PULL_REGISTRY=nexus3.o-ran-sc.org:10002 || true
 docker build --build-arg CONTAINER_PULL_REGISTRY=nexus3.o-ran-sc.org:10002 -t oransim:0.0.999 -f Dockerfile_kpm_updated .
 if [ $? -ne 0 ]; then
     echo "ERROR: Docker build failed. Cleaning up the E2 simulator..."

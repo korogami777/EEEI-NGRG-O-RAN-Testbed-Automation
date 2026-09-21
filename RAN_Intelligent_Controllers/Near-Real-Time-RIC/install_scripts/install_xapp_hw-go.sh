@@ -64,6 +64,9 @@ if grep -q "4.7.0" Dockerfile; then
     sed -i 's/4.7.0/4.9.4/g' Dockerfile
 fi
 
+# Pre-fetch base images from the throttled O-RAN SC registry with parallel, resumable downloads
+python3 "$SCRIPT_DIR/prefetch_docker_image.py" Dockerfile || true
+
 docker build -t example.com:80/hw-go:latest .
 
 if [ "$CHART_REPO_URL" != "http://0.0.0.0:8090" ]; then

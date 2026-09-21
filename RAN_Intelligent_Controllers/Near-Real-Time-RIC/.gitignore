@@ -4,6 +4,7 @@
 /appmgr/
 /charts/
 /e2-interface/
+/image_cache/
 /influxdb/
 /logs/
 /ric-dep/
