@@ -113,6 +113,13 @@ if [ "$USE_FLEXRIC" = "true" ]; then
     cd "$SCRIPT_DIR"
 fi
 
+# srsUE SA only supports 15 kHz SCS (band 3), while Duranta UEs interoperate with OCUDU on band 78
+if [ "$USE_DURANTA_UE" = "true" ]; then
+    GNB_ARGS+=(--band 78)
+else
+    GNB_ARGS+=(--band 3)
+fi
+
 echo
 echo "Generating Configuration for OCUDU Next Generation Node B..."
 cd Next_Generation_Node_B

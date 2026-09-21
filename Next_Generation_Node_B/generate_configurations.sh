@@ -52,21 +52,11 @@ fi
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
 cd "$SCRIPT_DIR"
 
-# Radio configuration presets (band 3 and band 78)
-BASE_EXAMPLE_CONFIG_PATH="$SCRIPT_DIR/ocudu/configs/gnb_rf_b210_fdd_srsUE.yml"
-GNB_DL_ARFCNS=("368500")
-ZMQ_CHANNEL_EMULATOR_CHANNEL_BW_MHZ=20
-GNB_SRATE_MHZ=23.04
-GNB_BASE_SRATE_HZ=23.04e6
-#
-# BASE_EXAMPLE_CONFIG_PATH="$SCRIPT_DIR/ocudu/configs/gnb_rf_b200_tdd_n78_20mhz.yml"
-# GNB_DL_ARFCNS=("632628")
-# ZMQ_CHANNEL_EMULATOR_CHANNEL_BW_MHZ=20
-# GNB_SRATE_MHZ=23.04
-# GNB_BASE_SRATE_HZ=23.04e6
+# Radio configuration preset: band 3 (FDD, 15 kHz SCS) for srsRAN UEs, or band 78 (TDD, 30 kHz SCS) for Duranta UEs
+NR_BAND="3"
 
 usage() {
-    echo "Usage: $0 [--disable-e2-term] [--e2-term-address <address>] [--cells <cell_numbers>] [--ues <ue_numbers>]"
+    echo "Usage: $0 [--disable-e2-term] [--e2-term-address <address>] [--cells <cell_numbers>] [--ues <ue_numbers>] [--band <3|78>]"
     echo "    For example: $0 --ues 4,5,6 --cells 1,2"
 }
 
@@ -126,6 +116,15 @@ while [[ $# -gt 0 ]]; do
         done
         shift 2
         ;;
+    --band)
+        if [ $# -lt 2 ] || { [ "$2" != "3" ] && [ "$2" != "78" ]; }; then
+            echo "ERROR: --band requires 3 or 78."
+            usage
+            exit 1
+        fi
+        NR_BAND="$2"
+        shift 2
+        ;;
     *)
         echo "ERROR: Unknown argument: $1"
         echo
@@ -134,6 +133,18 @@ while [[ $# -gt 0 ]]; do
         ;;
     esac
 done
+
+if [ "$NR_BAND" = "78" ]; then
+    BASE_EXAMPLE_CONFIG_PATH="$SCRIPT_DIR/ocudu/configs/gnb_rf_b200_tdd_n78_20mhz.yml"
+    GNB_DL_ARFCNS=("632628")
+else
+    BASE_EXAMPLE_CONFIG_PATH="$SCRIPT_DIR/ocudu/configs/gnb_rf_b210_fdd_srsUE.yml"
+    GNB_DL_ARFCNS=("368500")
+fi
+ZMQ_CHANNEL_EMULATOR_CHANNEL_BW_MHZ=20
+GNB_SRATE_MHZ=23.04
+GNB_BASE_SRATE_HZ=23.04e6
+
 if [ ${#UE_NUMBERS[@]} -eq 0 ]; then
     UE_NUMBERS=(1 2 3)
 fi

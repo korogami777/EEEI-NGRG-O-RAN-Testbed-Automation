@@ -79,7 +79,7 @@ if [ "$USE_ZMQ_CHANNEL_EMULATOR" = "true" ]; then
     "$SCRIPT_DIR/install_scripts/run_zmq_channel_emulator.sh" --show-ui "$SHOW_ZMQ_CHANNEL_EMULATOR_GUI"
 fi
 sudo true # Ensure sudo session is active
-sudo setsid bash -c "exec stdbuf -oL -eL \"$SCRIPT_DIR/run.sh\" $UE_NUMBER $RFSIM_SERVER_ARG" </dev/null >/dev/null 2>&1 &
+sudo setsid env DURANTA_UE_NR_BAND="${DURANTA_UE_NR_BAND:-}" bash -c "exec stdbuf -oL -eL \"$SCRIPT_DIR/run.sh\" $UE_NUMBER $RFSIM_SERVER_ARG" </dev/null >/dev/null 2>&1 &
 stty sane || true
 
 ATTEMPT=0

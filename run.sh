@@ -57,6 +57,12 @@ if [ "$USE_DURANTA_UE" = "true" ]; then
         echo "    https://github.com/usnistgov/O-RAN-Testbed-Automation/tree/main/OpenAirInterface_Testbed#simulating-multiple-ues-and-cells-with-a-zeromq-channel-emulator"
         exit 1
     fi
+    # Tune the Duranta UEs to the band that generate_configurations.sh configured on the OCUDU gNB
+    export DURANTA_UE_NR_BAND=$(yq eval '.cell_cfg.band // ""' Next_Generation_Node_B/configs/gnb.yaml 2>/dev/null || true)
+    if [ "$DURANTA_UE_NR_BAND" != "78" ]; then
+        echo "ERROR: USE_DURANTA_UE=true, but the gNB is configured for band ${DURANTA_UE_NR_BAND:-unknown} instead of band 78. Run ./generate_configurations.sh first."
+        exit 1
+    fi
 fi
 
 sudo true # Ensure sudo session is active

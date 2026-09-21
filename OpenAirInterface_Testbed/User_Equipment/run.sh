@@ -191,20 +191,22 @@ else
         RADIO_ARGS="--rfsim $RFSIM_SERVER_ARG --rfsimulator.[0].options chanmod"
     fi
 
-    # Radio configuration presets (band 3 and band 78)
-    BAND=3
-    BANDWIDTH_RBS=106
-    NUMEROLOGY=0
-    DL_CARRIER_FREQUENCY_HZ=1842500000
-    UL_CARRIER_OFFSET_HZ=-95000000
-    SSB_START_SUBCARRIER=486
-    #
-    # BAND=78
-    # BANDWIDTH_RBS=51
-    # NUMEROLOGY=1
-    # DL_CARRIER_FREQUENCY_HZ=3489420000
-    # UL_CARRIER_OFFSET_HZ=0
-    # SSB_START_SUBCARRIER=0
+    # Radio configuration presets: band 3 by default, or band 78 when the OCUDU testbed's run.sh sets DURANTA_UE_NR_BAND
+    if [ "${DURANTA_UE_NR_BAND:-3}" = "78" ]; then
+        BAND=78
+        BANDWIDTH_RBS=51
+        NUMEROLOGY=1
+        DL_CARRIER_FREQUENCY_HZ=3489420000
+        UL_CARRIER_OFFSET_HZ=0
+        SSB_START_SUBCARRIER=0
+    else
+        BAND=3
+        BANDWIDTH_RBS=106
+        NUMEROLOGY=0
+        DL_CARRIER_FREQUENCY_HZ=1842500000
+        UL_CARRIER_OFFSET_HZ=-95000000
+        SSB_START_SUBCARRIER=486
+    fi
 
     # sudo ip netns exec ue$UE_NUMBER ./nr-uesoftmodem -O "../../../../configs/ue$UE_NUMBER.conf" $RADIO_ARGS -r $BANDWIDTH_RBS --numerology $NUMEROLOGY --band $BAND -C $DL_CARRIER_FREQUENCY_HZ --CO $UL_CARRIER_OFFSET_HZ --ssb $SSB_START_SUBCARRIER
     sudo script -q -f -c "ip netns exec ue$UE_NUMBER ./nr-uesoftmodem -O \"../../../../configs/ue$UE_NUMBER.conf\" $RADIO_ARGS -r $BANDWIDTH_RBS --numerology $NUMEROLOGY --band $BAND -C $DL_CARRIER_FREQUENCY_HZ --CO $UL_CARRIER_OFFSET_HZ --ssb $SSB_START_SUBCARRIER $ADDITIONAL_FLAGS" "$SCRIPT_DIR/logs/ue${UE_NUMBER}_stdout.txt"
