@@ -1,0 +1,20 @@
+diff --git a/openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.c b/openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.c
+--- a/openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.c
++++ b/openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.c
+@@ -1855,6 +1855,16 @@
+   if (num_res == 1 && pucch[0].n_sr > 0 && pucch[0].sr_payload == 0)
+     return;
+ 
++  // HARQ-ACK on the common PUCCH (e.g. for Msg4 while the dedicated PUCCH config is just being applied) has no
++  // dedicated resource to multiplex with SR/CSI, so transmit only the HARQ-ACK in this slot
++  if (num_res > 1 && any_harq && !pucch[num_res - 1].pucch_resource) {
++    LOG_W(NR_MAC, "%d.%d HARQ-ACK on common PUCCH, dropping %d overlapping SR/CSI\n", frame, slot, num_res - 1);
++    pucch[0] = pucch[num_res - 1];
++    for (int e = 1; e < num_res; e++)
++      memset(&pucch[e], 0, sizeof(pucch[e]));
++    num_res = 1;
++  }
++
+   if (num_res > 1)
+     multiplex_pucch_resource(mac, pucch, num_res);
+ 

@@ -162,5 +162,15 @@ echo "Patching ran_func_kpm_subs.h for cell_global_id in cudu_ue_info_pair_t..."
 git apply --verbose --ignore-whitespace "$PARENT_DIR/install_patch_files/openairinterface5g/openair2/E2AP/RAN_FUNCTION/O-RAN/ran_func_kpm_subs.h.patch"
 cd ..
 
+cd openairinterface5g
+git restore openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.c
+if [ ! -f "openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.c.previous" ]; then
+    cp openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.c openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.c.previous
+    cp openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.c.previous "$PARENT_DIR/install_patch_files/openairinterface5g/openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.previous.c"
+fi
+echo "Patching nr_ue_scheduler.c to avoid multiplexing HARQ-ACK on common PUCCH with SR/CSI..."
+git apply --verbose --ignore-whitespace "$PARENT_DIR/install_patch_files/openairinterface5g/openair2/LAYER2/NR_MAC_UE/nr_ue_scheduler.c.patch"
+cd ..
+
 echo
 echo "Successfully patched Duranta OpenAirInterface."
