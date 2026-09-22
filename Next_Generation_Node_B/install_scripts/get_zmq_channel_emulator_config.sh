@@ -55,7 +55,10 @@ Next_Generation_Node_B)
     UE_NAMESPACE_SCRIPT="$PARENT_DIR/../User_Equipment/install_scripts/get_ue_namespace_ip.sh"
     ;;
 User_Equipment)
-    CHANNEL_EMULATOR_FILE="$PARENT_DIR/../Next_Generation_Node_B/zmq_channel_emulator/zmq_channel_emulator.py"
+    CHANNEL_EMULATOR_FILE="$PARENT_DIR/../../Next_Generation_Node_B/zmq_channel_emulator/zmq_channel_emulator.py"
+    if [ ! -f "$CHANNEL_EMULATOR_FILE" ]; then
+      CHANNEL_EMULATOR_FILE="$PARENT_DIR/../Next_Generation_Node_B/zmq_channel_emulator/zmq_channel_emulator.py"
+    fi
     UE_NAMESPACE_SCRIPT="$PARENT_DIR/install_scripts/get_ue_namespace_ip.sh"
     ;;
 OpenAirInterface_UE)

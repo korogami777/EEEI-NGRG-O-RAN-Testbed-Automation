@@ -33,7 +33,7 @@ echo "# Script: $(realpath "$0") $@"
 # Exit immediately if a command fails
 set -e
 
-RADIO_TYPE="SIMU" # Set to "SIMU", "ZMQ", or "USRP"
+RADIO_TYPE="ZMQ" # Set to "SIMU", "ZMQ", or "USRP"
 
 APTVARS="NEEDRESTART_MODE=l NEEDRESTART_SUSPEND=1 DEBIAN_FRONTEND=noninteractive"
 if ! command -v realpath &>/dev/null; then

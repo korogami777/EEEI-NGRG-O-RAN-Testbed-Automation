@@ -34,7 +34,7 @@ set -e
 APPLY_PATCHES=true
 CLEAN_INSTALL=false # Note: If set to true, then full_install.sh needs to be ran in the Next_Generation_Node_B directory too
 DEBUG_SYMBOLS=false
-RADIO_TYPE="SIMU" # Set to "SIMU", "ZMQ", or "USRP"
+RADIO_TYPE="ZMQ" # Set to "SIMU", "ZMQ", or "USRP"
 USE_IMSCOPE=false
 
 APTVARS="NEEDRESTART_MODE=l NEEDRESTART_SUSPEND=1 DEBIAN_FRONTEND=noninteractive"
