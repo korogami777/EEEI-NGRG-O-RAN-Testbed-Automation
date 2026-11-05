@@ -1,3 +1,5 @@
+[NGRG O-RAN Workshop (Nov 9 2026)](https://docs.google.com/document/d/1-u2AoI38_w_xCMrTlDdoKrWIs0pYsBu5Nll52ij0op0/edit?usp=sharing)
+
 # Automation Tool for Deploying 5G O-RAN Testbeds
 
 Based on the blueprints described in NIST TN 2311 [\[1\]][nist-tn-2311], this automation tool facilitates the deployment and configuration of 5G Open Radio Access Network (O-RAN) testbeds. Designed to operate in both bare metal and virtualized environments, it simplifies setting up the components required for a 5G O-RAN testbed, including the 5G Core; Next Generation Node B (gNodeB) composed of Radio Unit (RU), Distributed Unit (DU), and Centralized Unit (CU); User Equipment (UE); RAN Intelligent Controller (RIC); and a series of xApps that can be installed in the RIC. This reduces the complexity and time required to operationalize the testbeds described in the report above, and enables more efficient testing and validation to facilitate research and development in 5G/6G technologies.
