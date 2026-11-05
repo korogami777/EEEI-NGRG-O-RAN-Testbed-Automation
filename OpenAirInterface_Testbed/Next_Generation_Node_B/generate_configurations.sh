@@ -31,7 +31,7 @@
 # Exit immediately if a command fails
 set -e
 
-RADIO_TYPE="SIMU"                  # Set to "SIMU", "ZMQ", or "USRP"
+RADIO_TYPE="ZMQ"                   # Set to "SIMU", "ZMQ", or "USRP"
 USE_NIST_ZMQ_CHANNEL_EMULATOR=true # Set to false to use OCUDU’s default one-cell, three-UE ZeroMQ broker
 MAKE_GNB_E2_NODE=true
 MAKE_CU_E2_NODE=false

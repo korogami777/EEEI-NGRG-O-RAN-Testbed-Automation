@@ -34,7 +34,7 @@ set -e
 APPLY_PATCHES=true
 CLEAN_INSTALL=false # If SHARE_OAI_DIR_FROM_UE is true, set to false since the UE hosts openairinterface5g
 
-RADIO_TYPE="SIMU" # Set to "SIMU", "ZMQ", or "USRP"
+RADIO_TYPE="ZMQ" # Set to "SIMU", "ZMQ", or "USRP"
 
 DEBUG_SYMBOLS=false
 E2AP_VERSION="E2AP_V3"  # E2AP_V1, E2AP_V2, E2AP_V3

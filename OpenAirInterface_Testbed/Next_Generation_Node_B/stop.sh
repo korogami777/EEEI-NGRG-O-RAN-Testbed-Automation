@@ -37,7 +37,7 @@ fi
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
 cd "$SCRIPT_DIR"
 
-USE_ZMQ_CHANNEL_EMULATOR=false
+USE_ZMQ_CHANNEL_EMULATOR=true
 
 SELECTOR=""
 if [ "$#" -eq 1 ]; then

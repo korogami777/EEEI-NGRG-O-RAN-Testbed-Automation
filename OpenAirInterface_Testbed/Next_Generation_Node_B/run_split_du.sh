@@ -41,7 +41,7 @@ SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
 # Parse arguments
 RFSIM_SERVER=1
-USE_ZMQ_CHANNEL_EMULATOR=false
+USE_ZMQ_CHANNEL_EMULATOR=true
 ZMQ_THREAD_POOL="-1,-1"
 IMSCOPE_ENABLED=false
 USE_GDB=false

@@ -32,7 +32,7 @@
 set -e
 
 USE_SRSRAN_UE=false # Experimental
-USE_ZMQ_CHANNEL_EMULATOR=false
+USE_ZMQ_CHANNEL_EMULATOR=true
 SHOW_ZMQ_CHANNEL_EMULATOR_GUI=true
 if [ -z "${DISPLAY:-}" ] && [ -z "${WAYLAND_DISPLAY:-}" ]; then
     SHOW_ZMQ_CHANNEL_EMULATOR_GUI=false

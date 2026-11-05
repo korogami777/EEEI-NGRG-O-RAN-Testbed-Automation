@@ -31,7 +31,7 @@
 # Exit immediately if a command fails
 set -e
 
-USE_ZMQ_CHANNEL_EMULATOR=false
+USE_ZMQ_CHANNEL_EMULATOR=true
 SHOW_ZMQ_CHANNEL_EMULATOR_GUI=false
 if [ -z "${DISPLAY:-}" ] && [ -z "${WAYLAND_DISPLAY:-}" ]; then
     SHOW_ZMQ_CHANNEL_EMULATOR_GUI=false
