@@ -1,4 +1,4 @@
-[NGRG O-RAN Workshop (Nov 9 2026)](https://docs.google.com/document/d/1-u2AoI38_w_xCMrTlDdoKrWIs0pYsBu5Nll52ij0op0/edit?usp=sharing)
+## [NGRG O-RAN Workshop (Nov 9 2026)](https://docs.google.com/document/d/1-u2AoI38_w_xCMrTlDdoKrWIs0pYsBu5Nll52ij0op0/edit?usp=sharing)
 
 # Automation Tool for Deploying 5G O-RAN Testbeds
 
